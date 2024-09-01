@@ -1,0 +1,116 @@
+{
+  
+  "object3ds": [
+    { 
+      "id": "1",
+      "nodeId": "node_01",
+      "name": "name_1",
+      "assetBundleId":"assetBundle_01",
+      "position": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "rotation": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "scale": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+    },
+    { 
+      "id": "2",
+      "nodeId": "node_02",
+      "name": "name_2",
+      "assetBundleId":"assetBundle_02",
+      "position": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "rotation": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "scale": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+    }
+  ],
+  "objects(node)": [
+    {
+      "id": "b_01",
+      "parentId": null,
+      "name": "building_01"
+    },
+    {
+      "id": "f_01",
+      "parentId": "b_01",
+      "name": "1층"
+    },
+    {
+      "id": "f_02",
+      "parentId": "b_01",
+      "name": "2층"
+    },
+    {
+      "id": "l_01",
+      "parentId": "f_01",
+      "name": "line_01"
+    },
+    {
+      "id": "l_02",
+      "parentId": "f_01",
+      "name": "line_02"
+    },
+    {
+      "id": "l_01",
+      "parentId": "f_02",
+      "name": "line_01"
+    },
+    {
+      "id": "o_01",
+      "parentId": "l_01",
+      "name": "object_01"
+    },
+    {
+      "id": "o_02",
+      "parentId": "l_01",
+      "name": "object_02"
+    },
+    {
+      "id": "o_03",
+      "parentId": "l_01",
+      "name": "object_03"
+    }
+  ],
+  "categories(node)": [
+    {
+      "id": "cvt",
+      "parentId": null,
+      "name": "컨베이어벨트"
+    },
+    {
+      "id": "worker",
+      "parentId": null,
+      "name": "노동자"
+    }
+  ],
+  "assetBundles": [
+    {
+      "id": "assetBundle_01",
+      "name": "설비_01",
+      "categoryId": "cvt",
+      "fileName": "file_01",
+      "bundleName": "bundle_01",
+      "assetName": "prefab_01"     
+    }
+  ]
+}
