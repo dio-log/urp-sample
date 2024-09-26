@@ -1,103 +1,95 @@
 using System;
 using System.Collections;
-using System.IO;
-using System.Threading;
-using System.Threading.Tasks;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Networking;
-using UnityEngine.Rendering.Universal;
-using Object = UnityEngine.Object;
 
 namespace App.Utils
 {
-    public class AssetBundleLoader : MonoBehaviour
+    
+    //번들의 모든 에셋로드, 인스턴스화 x
+    //번들을 로드하고 특정 에셋을 인스턴스화
+    public class AssetBundleLoader
     {
-        private AssetBundle _assetBundle;
-        
-        public static AssetBundleLoader FormWeb(string url) => new AssetBundleLoader().Load(url);
-        public static AssetBundleLoader FormLocal(string path, string fileName) => new AssetBundleLoader().Load(path, fileName);
-      
-        private AssetBundleLoader Load(string url)
+        public static IEnumerator Load<T>(string url, string bundleName, string assetName, UnityAction<T> onSuccess = null, UnityAction<string> onError = null) where T : UnityEngine.Object
         {
-            var uwr = UnityWebRequestAssetBundle.GetAssetBundle(url);
-            var operation = uwr.SendWebRequest();
-            while (!operation.isDone)
+            //에셋 이름이 유니크하지 않을수있으니, 번들이름먼저 매치시킬필요가 있음 
+            if (!TryGetLoadedAssetBundle(bundleName, out var assetBundle))
             {
-                Task.Yield();
-            }
-            Debug.Log("1");
-            Debug.Log(uwr.result);
-            Debug.Log(uwr.error);
-            _assetBundle = DownloadHandlerAssetBundle.GetContent(uwr);
-            
-            return this;
-        }
-        
-        private AssetBundleLoader Load(string path, string fileName)
-        {
-            
-            var uwr = UnityWebRequestAssetBundle.GetAssetBundle(Path.Combine(path, fileName));
-            var operation = uwr.SendWebRequest();
-            while (!operation.isDone)
-            {
-                // yield return ;
-                Task.Yield();
-            }
-            Debug.Log("1");
-            _assetBundle = DownloadHandlerAssetBundle.GetContent(uwr);
-            
-            return this;
-        }
-
-        public void FromWeb(string url, UnityAction callback)
-        {
-            // StartCoroutine(Load(url, callback));
-        }
-        
-        private IEnumerator Load(string url, UnityAction onComplete)
-        {
-            
-            Debug.Log("1");
-            Thread.Sleep(3000);
-            // Task.Delay(10000);
-            Debug.Log("2");
-            var uwr = UnityWebRequestAssetBundle.GetAssetBundle(url);
-            yield return uwr.SendWebRequest();
-
-            var bundles =  AssetBundle.GetAllLoadedAssetBundles();
-
-            if (uwr.result == UnityWebRequest.Result.Success)
-            {
-                var assetBundle = DownloadHandlerAssetBundle.GetContent(uwr);
-                var objs = assetBundle.LoadAllAssets();
-                foreach (var o in objs)
+                using var uwr = UnityWebRequestAssetBundle.GetAssetBundle(url);
+                
+                yield return uwr.SendWebRequest();
+                
+                if (uwr.result == UnityWebRequest.Result.Success)
                 {
-                    Debug.Log(o.name);
-                    Instantiate(o);
+                    assetBundle = DownloadHandlerAssetBundle.GetContent(uwr);
                 }
-                
-                onComplete.Invoke();
+                else
+                {
+                    onError?.Invoke(uwr.error);
+                    yield break;
+                }
             }
-                
-        }
 
-        public T LoadAsset<T>(string assetName) where T : Object
-        {
-            return _assetBundle.LoadAsset<T>(assetName);
-        }
-
-        public void LoadAllAssets()
-        {
-            Debug.Log("2");
-            var objects = _assetBundle.LoadAllAssets();
-
-            foreach (var o in objects)
+            if (assetBundle is null)
             {
-                Debug.Log(o.name);
+                onError?.Invoke("AssetBundle is null");
+                yield break;
             }
-        }
+            
+            var asset = assetBundle.LoadAsset<T>(assetName);
+
+            if (asset is null)
+            {
+                onError?.Invoke("Asset is null");
+                yield break;
+            }
+            
+            onSuccess?.Invoke(asset);
+        } 
         
+
+        public static IEnumerator LoadAll<T>(string url, string bundleName, UnityAction<T[]> onSuccess = null, UnityAction<string> onError = null) where T : UnityEngine.Object
+        {
+            if (!TryGetLoadedAssetBundle(bundleName, out var assetBundle))
+            {
+                using var uwr = UnityWebRequestAssetBundle.GetAssetBundle(url);
+                var operation = uwr.SendWebRequest();
+                yield return operation;
+
+                if (uwr.result == UnityWebRequest.Result.Success)
+                {
+                    assetBundle = DownloadHandlerAssetBundle.GetContent(uwr);
+                }
+                else
+                {
+                    onError?.Invoke(uwr.error);
+                    yield break;
+                }
+            }
+            
+            if (assetBundle is null)
+            {
+                onError?.Invoke("Asset is null");
+                yield break;
+            }
+            
+            onSuccess?.Invoke(assetBundle.LoadAllAssets<T>());
+        }
+
+        private static bool TryGetLoadedAssetBundle(string bundleName, out AssetBundle assetBundle)
+        {
+            assetBundle = default;
+            foreach (var loadedBundle in AssetBundle.GetAllLoadedAssetBundles())
+            {
+                if (loadedBundle.name.Equals(bundleName))
+                {
+                    assetBundle = loadedBundle;
+                    return true;
+                }
+            }
+
+            return false;
+        }
     }
 }

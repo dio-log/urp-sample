@@ -1,17 +1,13 @@
 
-using System;
-using System.Collections;
-using System.Threading.Tasks;
 using App.Utils;
 using UnityEngine;
 
 public class LoadTest : MonoBehaviour
 {
-    [SerializeField]
-    private AssetBundleLoader assetBundleLoader;
+    
+    [SerializeField] private CoroutineRunner _coroutineRunner;
     private void Start()
     {
-        int i = 0;
         // while (i < 100)
         // {
         //     i++;
@@ -28,6 +24,16 @@ public class LoadTest : MonoBehaviour
 
     private void Update()
     {
-        assetBundleLoader.FromWeb("https://github.com/dio-log/dummy-data/raw/main/assetbundles/testbundle", () => {});
+        // assetBundleLoader2.FromWeb("https://github.com/dio-log/dummy-data/raw/main/assetbundles/testbundle", () => {});
+
+        _coroutineRunner.Run(
+            AssetBundleLoader.LoadAll<GameObject>(
+                "https://github.com/dio-log/dummy-data/raw/main/assetbundles/testbundle",
+                "testbundle",
+                (args) =>
+                {
+                    Debug.Log($"down : {args.Length}");
+                })
+            );
     }
 }
