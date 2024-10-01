@@ -682,28 +682,16 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 876713049}
-  - component: {fileID: 876713048}
   - component: {fileID: 876713050}
-  - component: {fileID: 876713051}
+  - component: {fileID: 876713052}
+  - component: {fileID: 876713053}
   m_Layer: 0
-  m_Name: GameObject
+  m_Name: Test
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &876713048
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 876713047}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4372592c7f254f5cb3bc6c6fbeed088a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &876713049
 Transform:
   m_ObjectHideFlags: 0
@@ -726,13 +714,13 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 876713047}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6eeb3a7fba39466b8254d0e81b0b65ef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _coroutineRunner: {fileID: 876713051}
---- !u!114 &876713051
+  _coroutineRunner: {fileID: 0}
+--- !u!114 &876713052
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -741,9 +729,22 @@ MonoBehaviour:
   m_GameObject: {fileID: 876713047}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e8b42a52a5764970a117f7adfb1f2a51, type: 3}
+  m_Script: {fileID: 11500000, guid: 87fc15f0991d45a5ab480263bb6226bc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &876713053
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 876713047}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f1ce45b9522a41ecb4a2692c964ee5e1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  webRequestHelper: {fileID: 876713052}
 --- !u!1 &993814706
 GameObject:
   m_ObjectHideFlags: 0

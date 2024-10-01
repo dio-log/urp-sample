@@ -26,14 +26,14 @@ public class LoadTest : MonoBehaviour
     {
         // assetBundleLoader2.FromWeb("https://github.com/dio-log/dummy-data/raw/main/assetbundles/testbundle", () => {});
 
-        _coroutineRunner.Run(
-            AssetBundleLoader.LoadAll<GameObject>(
-                "https://github.com/dio-log/dummy-data/raw/main/assetbundles/testbundle",
-                "testbundle",
-                (args) =>
-                {
-                    Debug.Log($"down : {args.Length}");
-                })
-            );
+        // _coroutineRunner.Run(
+        //     AssetBundleLoader.LoadAll<GameObject>(
+        //         "https://github.com/dio-log/dummy-data/raw/main/assetbundles/testbundle",
+        //         "testbundle",
+        //         (args) =>
+        //         {
+        //             Debug.Log($"down : {args.Length}");
+        //         })
+        //     );
     }
 }
