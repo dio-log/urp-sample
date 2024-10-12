@@ -10,8 +10,14 @@ namespace App.Utils
 {
     public class WebRequestHelper : MonoBehaviour
     {
-        private void Start()
+
+        private IEnumerator _sendGetRequest;
+        private IEnumerator _sendPostRequest;
+
+        private void Awake()
         {
+            // _sendPostRequest = SendGetRequest();
+
         }
 
         public Coroutine SendAsync(HttpMethod method, string url, Dictionary<string, string> body = null, UnityAction<string> onSuccess = null)
