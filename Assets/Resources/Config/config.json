@@ -1,0 +1,13 @@
+{
+  "environment": "development",
+  "development": {
+    "apiUrl": "https://api.dev.example.com",
+    "debug": true,
+    "logLevel": "debug"
+  },
+  "production": {
+    "apiUrl": "https://api.example.com",
+    "debug": false,
+    "logLevel": "error"
+  }
+}
