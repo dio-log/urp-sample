@@ -94,7 +94,6 @@ namespace App.Component3D
         public void Delete(IObject3D object3D)
         {
             _objects.Remove(object3D.ID);
-            object3D.Destroy();
             
             _onDelete?.Invoke(object3D);
             

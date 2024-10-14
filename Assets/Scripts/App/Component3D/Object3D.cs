@@ -8,6 +8,7 @@ namespace App.Component3D
 {
     public abstract class Object3D<T> : MonoBehaviour, IObject3D where T : IEntity
     {
+        protected abstract T OriginEntity { get; set; }
         public string ID { get; set; }
         public string Label { get; set; }
         public IObject3D Parent { get; set; }

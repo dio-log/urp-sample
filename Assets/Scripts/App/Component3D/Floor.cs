@@ -4,8 +4,15 @@ namespace App.Component3D
 {
     public class Floor : Object3D<FloorEntity>
     {
+        //어떤 서버 엔티티가 와도 비교가능해야됨
+
+
+        protected override FloorEntity OriginEntity { get; set; }
+
         public override void Init(FloorEntity entity)
         {
+            OriginEntity = entity;
+            
         }
 
         public override FloorEntity GetEntity()

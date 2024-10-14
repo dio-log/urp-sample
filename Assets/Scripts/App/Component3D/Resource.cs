@@ -4,12 +4,13 @@ namespace App.Component3D
 {
     public class Resource : MeshObject3D<ResourceEntity>
     {
-        public ServerResourceEntity OriginEntity { get; set; }
         public override void Init(ResourceEntity entity)
         {
             ID = entity.ID;
             Label = entity.Label;
         }
+
+        protected override ResourceEntity OriginEntity { get; set; }
 
         public override ResourceEntity GetEntity()
         {
@@ -28,7 +29,7 @@ namespace App.Component3D
         {
             entity = GetEntity();
 
-            return OriginEntity.CompareWith(entity);
+            return OriginEntity.Equals(entity);
         }
 
         
