@@ -1,4 +1,5 @@
 using App.Component3D;
+using UnityEngine;
 
 namespace App.Entities
 {
@@ -6,5 +7,11 @@ namespace App.Entities
     {
         public string ID { get; set; }
         public string Label { get; set; }
+        public string Type { get;set; }
+        public Vector3 Position { get; set; }
+        public Vector3 Rotation { get; set; }
+        public Vector3 Scale { get; set; }
+        
+      
     }
 }

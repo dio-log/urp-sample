@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace App.Component3D
 {
@@ -10,8 +11,7 @@ namespace App.Component3D
         public IObject3D Parent { get; set; }
         public List<IObject3D> Children { get; set; }
         
-        public void Destroy();
-     
-        
+        public GameObject GetGameObject();
+
     }
 }
