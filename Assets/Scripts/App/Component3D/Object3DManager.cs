@@ -77,6 +77,8 @@ namespace App.Component3D
                 return;
             }
             
+            
+            
             switch (object3D)
             {
                 case Resource resource:
@@ -86,7 +88,6 @@ namespace App.Component3D
                     floor.Init(entity as FloorEntity);
                     break; 
             }
-            
             _objects.Add(object3D.ID, object3D);
             Debug.Log("추가");
         }

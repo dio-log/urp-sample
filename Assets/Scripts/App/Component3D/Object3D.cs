@@ -13,10 +13,11 @@ namespace App.Component3D
         public string Label { get; set; }
         public IObject3D Parent { get; set; }
         public List<IObject3D> Children { get; set; }
-        public GameObject GetGameObject()
+        public GameObject GameObject
         {
-            return gameObject;
+            get => gameObject; 
         }
+
         public abstract void Init(T entity);
         public abstract T GetEntity();
         //클래스 타입별로 리스트를 뽑을거니까. 인터페이스에 없어도됨 
