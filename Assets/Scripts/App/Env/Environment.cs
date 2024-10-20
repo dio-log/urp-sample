@@ -25,9 +25,9 @@ namespace App.Env
             var json = Resources.Load<TextAsset>(ConfigPath);
             var config =  JsonConvert.DeserializeObject<Configuration>(json.text);
 
-            ActiveProfile = config.ActiveProfile;
-            ConfigProperties = ActiveProfile.Equals("development") ? config.Development : config.Production;
-            DataSourceURL = ConfigProperties.DataSourceUrl;
+            // ActiveProfile = config.ActiveProfile;
+            // ConfigProperties = ActiveProfile.Equals("development") ? config.Development : config.Production;
+            // DataSourceURL = ConfigProperties.apiUrl;
         }
         
         

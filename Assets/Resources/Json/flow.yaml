@@ -1,0 +1,57 @@
+
+
+
+App:
+  Event:
+    EventManger:
+      마우스가 클릭됐을때 기본적으로 UI는 건너뛰고. 레이캐스트한다. Selectable을 상속받은 애만 건다 
+      UI는 이벤트가 직접 작용하게 한다
+      - 클릭 => 레이캐스트 => 가장앞에 있는것 => ClickHandler 구현 확인 =>  Click();
+    
+    
+    Commander:
+    ICommand:
+      CreateObject3DCommand:
+      DestroyObject3DCommand: 
+      MoveObject3DCommand:
+      RoatateObject3DCommnad:
+      ScaleObject3DCommand:
+    Object3DManager:
+      OnPositionChange: delegate, 커맨드 동작 정의, Object3D 에 등록:
+                          private HandlePositionChanged();
+      
+      OnRotationChange: delegate, RoatateObject3DCommnad정의
+      OnScaleChange: delegate, ScaleObject3DCommnad정의
+          
+  
+    Object3DFactory:
+      CreateObject3D<T>(IEntity): T extends Object3D or MeshObject3D
+        
+      
+    Space3D: IEntity
+      Object3D: delegate:
+                  OnPositionChanged: positionChanged?.invoke(); 기즈모에서 변경이 완료됐을때 인보그해주면됨 
+                  
+       Object3D<T>: T extends IVO, SetVO(T vo), renderObject, 메쉬가없는 기본오브젝트
+        MeshObject3D<T>: 렌더링이 가능한 오브젝트, 이이상 클래스도 필요없음. VO로 구분되면됨 
+        
+      IClickable: 
+        - 구현해서 Object3dmesh에 set해주는 컴포넌트 패턴, 
+        - 서버마도 동작이 다르다면 플러그인형태로 구현해서 넘겨주기만 하면된다
+        Click():
+        DoubleClick():
+      
+          
+    AssetMnager: 에셋관리   
+        
+    UI: 여기는 일반적으로 이벤트가 직접 작용하게 구현됨
+    
+  IEntity: 앱에서 필요한 필수 요소만 가진다 
+    Oject3DEntity: id, parentId, name
+      MeshObject3DEntity: id, parentId, name, fileName, assetName, 
+        
+    
+  helper:
+    
+  
+  
