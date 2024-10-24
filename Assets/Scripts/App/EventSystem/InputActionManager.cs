@@ -16,8 +16,6 @@ namespace App.EventSystem
         
         private void Awake()
         {
-            
-            
             inputActionAsset.FindAction("LeftClick").performed += OnClickPerformed;
 
             // inputActionAsset.FindAction("LeftPress").performed += (c) =>
@@ -55,7 +53,7 @@ namespace App.EventSystem
                 var obj = hit.transform.GetComponent<TestObject>();
                 if (obj is IClickActionHandler handler)
                 {
-                    handler.Click(new EvtArgs(obj));
+                    // handler.Click(new EvtArgs(obj));
                 }
                 
             }

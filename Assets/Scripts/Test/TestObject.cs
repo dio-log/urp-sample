@@ -4,10 +4,11 @@ using App.Space3D.Component;
 using App.Space3D.Object3D;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.UIElements;
 
 namespace Test
 {
-    public class TestObject : MonoBehaviour, IClickActionHandler, IObject3D
+    public class TestObject : MonoBehaviour, IClickActionHandler
     {
         
         private bool IsSelected = false;

@@ -12,25 +12,10 @@ namespace App.Component3D
         public SimpleHierarchy hierarchy;
         public AssetManager assetManager;
 
-        private event UnityAction<IObject3D> _onCreate;
-        public event UnityAction<IObject3D> OnCreate
-        {
-            add => _onCreate += value;
-            remove => _onCreate -= value;
-        }
-        
-        private event UnityAction<IObject3D> _onDelete;
-        public event UnityAction<IObject3D> OnDelete
-        {
-            add => _onDelete += value;
-            remove => _onDelete -= value;
-        }
-
         public T Create<T>() where T : MonoBehaviour, IObject3D
         {
             var wrap = new GameObject();
             var obj = wrap.AddComponent<T>();
-            _onCreate?.Invoke(obj);
             return obj;
         }
         
@@ -39,7 +24,6 @@ namespace App.Component3D
             var wrap = new GameObject();
             var obj = wrap.AddComponent<T>();
             obj.AssetBundleId = assetBundleId;
-            _onCreate?.Invoke(obj);
             return obj;
         }
 
@@ -96,8 +80,6 @@ namespace App.Component3D
         {
             _objects.Remove(object3D.ID);
             
-            _onDelete?.Invoke(object3D);
-            
             Debug.Log("삭제");
         }
 
@@ -130,6 +112,8 @@ namespace App.Component3D
             
             //트랜스폼 초기화
         }
+        
+        
         
     }
 }

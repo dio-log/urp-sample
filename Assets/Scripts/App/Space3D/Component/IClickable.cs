@@ -4,10 +4,10 @@ namespace App.Space3D.Component
 {
     public interface IClickable : IComponent
     {
-        public void LeftClick(IObject3D object3D);
+        public void LeftClick(BaseObject3D object3D);
         
-        public void RightClick(IObject3D object3D);
+        public void RightClick(BaseObject3D object3D);
         
-        public void DoubleClick(IObject3D object3D);
+        public void DoubleClick(BaseObject3D object3D);
     }
 }
