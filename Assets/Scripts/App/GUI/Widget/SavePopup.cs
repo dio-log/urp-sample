@@ -1,5 +1,5 @@
 using System;
-using App.CustomAttribute;
+using App.Core.Shared.DI;
 using App.Utils;
 using UnityEngine;
 using UnityEngine.Events;
@@ -10,8 +10,8 @@ namespace App.GUI.Widget
 {
     public class SavePopup : MonoBehaviour
     {
-        [FindComponent("SaveButton")] private Button _saveButton;
-        [FindComponent("cancelButton")] private Button _cancelButton;
+        [InjectComponents("SaveButton")] private Button _saveButton;
+        [InjectComponents("cancelButton")] private Button _cancelButton;
 
         public event UnityAction<string> OnSaveButtonClicked;
 
@@ -24,7 +24,7 @@ namespace App.GUI.Widget
         
         private void Awake()
         {
-            Injector.InjectComponent(this);
+            Injector.Inject(this);
             
             _saveButton.onClick.AddListener(OnSaveButtonClick);
 

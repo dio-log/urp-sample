@@ -1,85 +1,66 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Networking;
 
 namespace App.Utils
 {
-    public class WebRequestHelper : MonoBehaviour
+    public class WebRequestHelper 
     {
-
-        private IEnumerator _sendGetRequest;
-        private IEnumerator _sendPostRequest;
-
-        private void Awake()
-        {
-            // _sendPostRequest = SendGetRequest();
-
-        }
-
-        public Coroutine SendAsync(HttpMethod method, string url, Dictionary<string, string> body = null, UnityAction<string> onSuccess = null)
+        public static async Task<ResponseData> SendRequestAsync(HttpMethod method, string url, Dictionary<string, string> body = null)
         {
             switch (method)
             {
                 case HttpMethod.GET:
-                    return StartCoroutine(SendGetRequest(url, onSuccess));
+                    return await SendGetRequest(url);
                 case HttpMethod.POST:
-                    return StartCoroutine(SendPostRequest(url, body, onSuccess));
+                    return await SendPostRequest(url, " ");
                 default:
-                    Debug.LogError("지원하지 않는 HTTP 메소드입니다.");
                     return null;
             }
         }
 
-        public IEnumerator SendGetRequest(string url, UnityAction<string> onSuccess)
+        private static async Task<ResponseData> SendGetRequest(string url)
         {
-
             using var uwr = UnityWebRequest.Get(url);
-
-            yield return uwr.SendWebRequest();
-
-            if (uwr.result != UnityWebRequest.Result.Success)
-            {
-                Debug.Log("Error: " + uwr.error);
-                yield break;
-            }
-
-            // var bytes = uwr.downloadHandler.data;
-            Debug.Log(uwr.downloadHandler.text);
-            onSuccess?.Invoke(uwr.downloadHandler.text);
             
+            await uwr.SendWebRequest();
+
+            var responseData = new ResponseData();
+            
+            if(uwr.result == UnityWebRequest.Result.Success)
+            {   
+                responseData.RawData = uwr.downloadHandler.data;
+                responseData.Text = uwr.downloadHandler.text;
+                
+                return responseData;
+            }
+            
+            responseData.Error = uwr.error;
+            return responseData;
         }
-        //
-        // public IEnumerator SendPostRequest(string url, List<IMultipartFormSection> body, UnityAction<string> onSuccess = null)
-        // {
-        //     using var uwr = UnityWebRequest.Post(url, body);
-        //     
-        //     yield return uwr.SendWebRequest();
-        //     
-        //     if (uwr.result != UnityWebRequest.Result.Success)
-        //     {
-        //         Debug.Log("Error: " + uwr.error);
-        //         yield break;
-        //     }
-        //
-        //     onSuccess?.Invoke(uwr.downloadHandler.text);
-        // }
-        
-        public IEnumerator SendPostRequest(string url, Dictionary<string, string> body, UnityAction<string> onSuccess)
+
+        private static async Task<ResponseData> SendPostRequest(string url, string body)
         {
-            using var uwr = UnityWebRequest.Post(url, body ?? new Dictionary<string, string>());
+            using var uwr = UnityWebRequest.PostWwwForm(url, body);
             
-            yield return uwr.SendWebRequest();
+            await uwr.SendWebRequest();
+
+            var responseData = new ResponseData();
             
-            if (uwr.result != UnityWebRequest.Result.Success)
-            {
-                Debug.Log("Error: " + uwr.error);
-                yield break;
+            if(uwr.result == UnityWebRequest.Result.Success)
+            {   
+                responseData.RawData = uwr.downloadHandler.data;
+                responseData.Text = uwr.downloadHandler.text;
+                
+                return responseData;
             }
-            Debug.Log(uwr.downloadHandler.text);
-            onSuccess?.Invoke(uwr.downloadHandler.text);
+            
+            responseData.Error = uwr.error;
+            return responseData;
         }
         
         private string AppendQueryParameters(string url, Dictionary<string, string> parameters)
@@ -109,6 +90,14 @@ namespace App.Utils
             return sb.ToString();
         }
 
+    }
+
+    public class ResponseData
+    {
+        public bool IsSuccess => Error == null;
+        public byte[] RawData { get; set; }
+        public string Text { get; set; }
+        public string Error { get; set; }
     }
 
     public enum HttpMethod

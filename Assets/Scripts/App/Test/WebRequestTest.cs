@@ -14,19 +14,19 @@ namespace App.Test
 
 
 
-            StartCoroutine(Send());
+            // StartCoroutine(Send());
 
         }
 
 
-        private IEnumerator Send()
-        {
-            yield return webRequestHelper.SendAsync(HttpMethod.GET,
-                "https://raw.githubusercontent.com/dio-log/dummy-data/refs/heads/main/data/dummy.json");
-            
-            yield return webRequestHelper.SendAsync(HttpMethod.POST, "https://jsonplaceholder.typicode.com/posts");
-            
-        }
+        // private IEnumerator Send()
+        // {
+            // yield return webRequestHelper.SendAsync(HttpMethod.GET,
+            //     "https://raw.githubusercontent.com/dio-log/dummy-data/refs/heads/main/data/dummy.json");
+            //
+            // yield return webRequestHelper.SendAsync(HttpMethod.POST, "https://jsonplaceholder.typicode.com/posts");
+            //
+        // }
         
         
     }

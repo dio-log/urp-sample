@@ -1,11 +1,17 @@
 using System;
+using App.Core.Shared.DI;
 using App.Entities;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace App.Test
 {
     public class RecordTest : MonoBehaviour
     {
+
+        // [InjectComponent]
+        // private Button _button;
+        
         private void Start()
         {
             var entity1 = new ResourceEntity()
@@ -22,6 +28,11 @@ namespace App.Test
             };
             
             Debug.Log(entity1.Equals(entity2));
+            
+        }
+
+        public void Constructor()
+        {
             
         }
     }

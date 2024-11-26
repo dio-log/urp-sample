@@ -1,28 +1,61 @@
+using App.Entity;
 using UnityEngine;
 
 namespace App.Space3D.Object3D
 {
     public class Object3DFactory
     {
-        
-        
-        public static T CreateObject3D<T>() where T : BaseObject3D
-        {
-            
-            var wrap = new GameObject();
-            var object3D = wrap.AddComponent<T>();
-            InitializeObject3D(object3D);
+        private AssetManager _assetManager;
 
-            var instance = new GameObject();
-            instance.transform.SetParent(wrap.transform);
+        public Object3DFactory(AssetManager assetManager)
+        {
+            _assetManager = assetManager;
+        }
+        public T Create<T>() where T : BaseObject3D
+        {
+            var warp = new GameObject();
             
+            var object3D = InitializeInstance<T>(warp);
+
+            return object3D;
+        }
+        
+        public T Create<T>(string assetId) where T : BaseMeshObject3D
+        {
+            var wrap = new GameObject();
+            var object3D = InitializeInstance<T>(wrap);
+            
+            var instance = new GameObject(); //에셋에서 로드
+            object3D.RenderTarget = instance.GetComponent<Renderer>();
+            instance.transform.SetParent(wrap.transform);
             
             return object3D;
         }
-
-        private static void InitializeObject3D(BaseObject3D object3D)
+        
+        public T Create<T>(IEntity entity) where T : BaseMeshObject3D
         {
-            // 바운드, 컴포넌트 등 
+            var wrap = new GameObject();
+            var object3D = InitializeInstance<T>(wrap, entity);
+            
+            var instance = new GameObject(); //에셋에서 로드
+            object3D.RenderTarget = instance.GetComponent<Renderer>();
+            instance.transform.SetParent(wrap.transform);
+            
+            return object3D;
+        }
+        
+        
+
+        private T InitializeInstance<T>(GameObject instance) where T : BaseObject3D
+        {
+
+            return instance.AddComponent<T>();
+        }
+        
+        private T InitializeInstance<T>(GameObject instance, IEntity entity) where T : BaseObject3D
+        {
+
+            return instance.AddComponent<T>();
         }
     }
 }
