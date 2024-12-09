@@ -9,9 +9,6 @@ namespace App.Test
     public class RecordTest : MonoBehaviour
     {
 
-        // [InjectComponent]
-        // private Button _button;
-        
         private void Start()
         {
             var entity1 = new ResourceEntity()
